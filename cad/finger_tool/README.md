@@ -3,8 +3,13 @@
 A 3D-printed tool that clicks into the OnRobot Quick Changer (robot side) like any OnRobot
 tool. It carries a hand with an extended middle finger so the robot can press buttons.
 
-Status: **base done, hand not yet chosen.** Once the hand is added there will be 4 versions,
-with the hand turned 0°, 90°, 180° and 270° around the tool axis.
+The hand comes in 4 versions, turned 0°, 90°, 180° and 270° around the tool axis
+(`preview_orientations.png`). Print **one** of the `plate_hand_rot*.stl` files, plus the body and
+the slider.
+
+Hand model: ["Middle finger hand"](https://sketchfab.com/models/efa2d616f50d488c8ce64daf38b5a65f)
+by **D.p**, licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Changes: forearm
+cut off, scaled to 60 %, simplified to about 100k faces, and fused onto the plate.
 
 ## Parts
 
@@ -12,7 +17,8 @@ with the hand turned 0°, 90°, 180° and 270° around the tool axis.
 |---|---|---|
 | Body | `base_body.stl` | The quick-changer part that hooks onto the robot side. Original OnRobot geometry; unused holes filled. |
 | Slider | `base_slider.stl` | Spring-loaded latch with the release handle. Original geometry. |
-| Plate (+ hand) | `base_plate.stl` | Original interface plate on an 8 mm solid boss. The hand is fused onto the underside. Has a printed stop pin and 4 M6 tap holes. |
+| Plate + hand | `plate_hand_rot{0,90,180,270}.stl` | Original interface plate on an 8 mm solid boss, with the hand fused underneath. Has a printed stop pin and 4 M6 tap holes. The fingertip is 151 mm below the quick-changer interface and lies on the tool axis. |
+| Plate only | `base_plate.stl` | The same plate without the hand. |
 
 The STEP files hold the same parts as exact CAD.
 
@@ -32,6 +38,8 @@ The STEP files hold the same parts as exact CAD.
 
 ## Printing
 
+- Print the plate + hand standing on the plate (finger up). The hand needs only a little
+  support under the curled fingers and thumb.
 - PETG or PLA, 0.2 mm layers or finer. Use 100 % infill for the finger and 4+ perimeters
   for the body.
 - The slider cavity has 0.15 mm clearance per side. If your printer prints tight, sand the
@@ -39,5 +47,8 @@ The STEP files hold the same parts as exact CAD.
 
 ## Rebuild
 
-`python build_base.py` (needs `cadquery`) downloads the Gecko SP3 STEP from onrobot.com if it
-is missing and regenerates the three parts.
+1. `python build_base.py` (needs `cadquery`) downloads the Gecko SP3 STEP from onrobot.com if
+   it is missing and regenerates the body, slider and plate.
+2. `python build_tool.py main_fuck.stl [scale]` (needs `trimesh manifold3d fast-simplification`)
+   fuses the hand onto the plate in the 4 orientations. The hand STL comes from the Sketchfab
+   download.
