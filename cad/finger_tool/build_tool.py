@@ -2,7 +2,7 @@
 
 Input:  base_plate.stl (from build_base.py) and the hand mesh
         ("Middle finger hand" by D.p on Sketchfab, CC-BY 4.0, file main_fuck.stl).
-Output: plate_hand_rot{0,90,180,270}.stl, the plate with the hand fused on, turned
+Output: plate_hand_rot{0,180}.stl, the plate with the hand fused on, turned
         around the tool axis. 0 deg = palm facing +X (the side away from the release handle).
 
 The hand is cut 20 mm behind the wrist, scaled, simplified and placed so that the
@@ -24,6 +24,7 @@ SCALE = 0.6              # hand size relative to the model (life size)
 FACES = 100_000
 PLATE_BOTTOM_Y = -10.7   # underside of the boss in base_plate
 SINK = 1.0               # how far the wrist goes into the boss
+DEGREES = (0, 180)       # chosen orientations (90 and 270 were also offered)
 
 
 def to_manifold(m):
@@ -59,7 +60,7 @@ def main():
     scale = float(sys.argv[2]) if len(sys.argv) > 2 else SCALE
     plate = to_manifold(trimesh.load(os.path.join(HERE, "base_plate.stl")))
     hand = prepare_hand(hand_path, scale)
-    for deg in (0, 90, 180, 270):
+    for deg in DEGREES:
         tool = plate + hand.rotate([0.0, float(deg), 0.0])
         out = to_trimesh(tool)
         assert out.is_watertight and len(out.split()) == 1, deg
