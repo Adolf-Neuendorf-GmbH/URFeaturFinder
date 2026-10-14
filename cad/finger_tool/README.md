@@ -17,7 +17,7 @@ cut off, scaled to 60 %, simplified to about 100k faces, and fused onto the plat
 |---|---|---|
 | Body | `base_body.stl` | The quick-changer part that hooks onto the robot side. Original OnRobot geometry; unused holes filled. |
 | Slider | `base_slider.stl` | Spring-loaded latch with the release handle. Original geometry. |
-| Plate + hand | `plate_hand_rot{0,90,180,270}.stl` | Original interface plate on an 8 mm solid boss, with the hand fused underneath. Has a printed stop pin and 4 M6 tap holes. The fingertip is 151 mm below the quick-changer interface and lies on the tool axis. |
+| Plate + hand | `plate_hand_rot{0,90,180,270}.stl` | Original interface plate on an 8 mm solid boss, with the hand fused underneath. Has a printed stop pin and 4 M6 tap holes. The fingertip is about 162 mm below the top face of the printed body and lies on the tool axis. |
 | Plate only | `base_plate.stl` | The same plate without the hand. |
 
 The STEP files hold the same parts as exact CAD.
