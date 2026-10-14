@@ -4,7 +4,7 @@ A 3D-printed tool that clicks into the OnRobot Quick Changer (robot side) like a
 tool. It carries a hand with an extended middle finger so the robot can press buttons.
 
 The hand comes in 4 versions, turned 0°, 90°, 180° and 270° around the tool axis
-(`preview_orientations.png`). Print **one** of the `plate_hand_rot*.stl` files, plus the body and
+(`preview_orientations.png`, upright: `preview_orientations_upright.png`). Print **one** of the `plate_hand_rot*.stl` files, plus the body and
 the slider.
 
 Hand model: ["Middle finger hand"](https://sketchfab.com/models/efa2d616f50d488c8ce64daf38b5a65f)
@@ -26,8 +26,9 @@ The STEP files hold the same parts as exact CAD.
 
 - 2 compression springs, about 4.5 mm OD and about 25 mm long (ballpoint-pen springs work).
   They sit in the two slots of the slider and push it outward. Travel is 4.3 mm.
-- 4 M6 cylinder-head screws (DIN 912), M6 × 10 (a 12 mm screw just pokes out the bottom). They go through the body into the plate and
-  cut their own thread in the plastic (Ø5.0 holes).
+- 4 M6 cylinder-head screws (DIN 912), M6 × 10 (a 12 mm screw just pokes out the bottom). They go through the body into the plate. The plate
+  holes are Ø5.0, the M6 tap-drill size: drill them out to 5.0 mm after printing, then tap
+  M6. Works best in nylon.
 
 ## Assembly
 
@@ -40,7 +41,8 @@ The STEP files hold the same parts as exact CAD.
 
 - Print the plate + hand standing on the plate (finger up). The hand needs only a little
   support under the curled fingers and thumb.
-- PETG or PLA, 0.2 mm layers or finer. Use 100 % infill for the finger and 4+ perimeters
+- Nylon (PA), PETG or PLA, 0.2 mm layers or finer. Dry nylon before printing; it shrinks a
+  little, so check the slider fit and sand if needed. Use 100 % infill for the finger and 4+ perimeters
   for the body.
 - The slider cavity has 0.15 mm clearance per side. If your printer prints tight, sand the
   slider sides.
