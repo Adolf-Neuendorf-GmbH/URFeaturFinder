@@ -7,7 +7,8 @@ Turns the quick-changer tool side of OnRobot's Gecko SP3 model into three printa
   base_slider  the spring-loaded latch, unchanged geometry; the body/plate cavity
                is widened by CLEAR instead so it slides after printing
   base_plate   the interface plate on top of a solid boss; the hand gets fused
-               onto its underside later. Carries a printed stop pin and M6 tap holes.
+               onto its underside later. Has M6 tap holes and is made symmetric, so the
+               body can be screwed on in two positions 180 deg apart.
 
 Hardware: 2 compression springs (about 4.5 mm OD, about 25 mm long, e.g. ballpoint-pen
 springs) in the slider slots, and 4x M6 cylinder-head screws (DIN 912) through the
@@ -34,7 +35,6 @@ BOSS = 8.0           # boss thickness below the original plate
 SCREW_TAP = 5.0      # M6 thread cut directly into plastic
 SCREW_DEPTH = 14.0
 CLEAR = 0.15         # slider clearance per side
-STOP_PIN_X = -22.0   # replaces steel pin 100364 that limits the slider
 
 # components of the quick-changer sub-assembly (NAUO7)
 BODY, PLATE, SLIDER = "NAUO9", "NAUO15", "NAUO10"
@@ -54,8 +54,8 @@ def build(parts):
 
     boss = cq.Solid.makeCylinder(35.5, BOSS_TOP - (Y_PLATE_BOT - BOSS), cq.Vector(0, BOSS_TOP, 0), cq.Vector(0, -1, 0))
     boss = cq.Workplane().add(boss).faces("<Y").edges().chamfer(1.0).val()
-    pin = cq.Solid.makeCylinder(1.45, 1.0 - BOSS_TOP + 0.5, cq.Vector(STOP_PIN_X, BOSS_TOP - 0.5, 0), cq.Vector(0, 1, 0))
-    plate = parts[PLATE].fuse(boss).fuse(pin)
+    # The steel stop pin 100364 is left out: the body alone limits the slider travel.
+    plate = parts[PLATE].fuse(boss)
     for k in SCREWS:
         c = parts[k].Center()
         plate = plate.cut(cq.Solid.makeCylinder(SCREW_TAP / 2, SCREW_DEPTH, cq.Vector(c.x, Y_SPLIT + 0.1, c.z), cq.Vector(0, -1, 0)))
@@ -68,6 +68,8 @@ def build(parts):
         moved = slider.translate(cq.Vector(0, dy, dz))
         body = body.cut(moved)
         plate = plate.cut(moved)
+    # Keep only material that fits the body in both positions, so one plate gives 0 and 180 deg.
+    plate = plate.intersect(plate.rotate(cq.Vector(0, 0, 0), cq.Vector(0, 1, 0), 180))
     return {"base_body": body, "base_plate": plate, "base_slider": slider}
 
 
